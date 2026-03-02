@@ -1,0 +1,14 @@
+# Compiled files
+student_system
+*.exe
+*.out
+*.o
+
+# Data files
+students.txt
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*~
