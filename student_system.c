@@ -65,6 +65,7 @@ int main() {
 
 // Function implementations will go below
 void addStudent(struct Student students[], int *count) {
+    // Check if array has reached maximum capacity
     if (*count >= 100) {
         printf("Cannot add more students. Array is full!\n");
         return;
@@ -83,19 +84,22 @@ void addStudent(struct Student students[], int *count) {
     printf("Enter Marks: ");
     scanf("%f", &students[*count].marks);
     
-    (*count)++;  // Increment count
+    (*count)++;  // Increment count using pointer
     printf("Student added successfully!\n");
 }
 
 void displayStudents(struct Student students[], int count) {
+    // Check if there are any students to display
     if (count == 0) {
         printf("\nNo students to display!\n");
         return;
     }
     
+    // Print table header with formatting
     printf("\n%-20s %-30s %-10s %-10s\n", "Reg No", "Name", "Age", "Marks");
     printf("-----------------------------------------------------------------------\n");
     
+    // Loop through all students and display their information
     for (int i = 0; i < count; i++) {
         printf("%-20s %-30s %-10d %-10.2f\n", 
                students[i].regNo, 
@@ -112,14 +116,16 @@ void searchStudent(struct Student students[], int count) {
     printf("Enter Registration No to search: ");
     scanf("%s", searchReg);
     
+    // Linear search through the array
     for (int i = 0; i < count; i++) {
+        // Use strcmp() to compare strings (can't use == for strings in C)
         if (strcmp(students[i].regNo, searchReg) == 0) {
             printf("\nStudent Found!\n");
             printf("Reg No: %s\n", students[i].regNo);
             printf("Name: %s\n", students[i].name);
             printf("Age: %d\n", students[i].age);
             printf("Marks: %.2f\n", students[i].marks);
-            return;
+            return;  // Exit function once student is found
         }
     }
     
@@ -127,13 +133,16 @@ void searchStudent(struct Student students[], int count) {
 }
 
 void saveToFile(struct Student students[], int count) {
+    // Open file in write mode (creates new or overwrites existing)
     FILE *file = fopen("students.txt", "w");
     
+    // Check if file opened successfully
     if (file == NULL) {
         printf("Error opening file!\n");
         return;
     }
     
+    // Write each student's data to file
     for (int i = 0; i < count; i++) {
         fprintf(file, "%s %s %d %.2f\n", 
                 students[i].regNo, 
@@ -142,19 +151,23 @@ void saveToFile(struct Student students[], int count) {
                 students[i].marks);
     }
     
-    fclose(file);
+    fclose(file);  // Always close files after use
     printf("Data saved to students.txt successfully!\n");
 }
 
 void loadFromFile(struct Student students[], int *count) {
+    // Open file in read mode
     FILE *file = fopen("students.txt", "r");
     
+    // Check if file exists
     if (file == NULL) {
         printf("No saved data found!\n");
         return;
     }
     
-    *count = 0;
+    *count = 0;  // Reset count before loading
+    
+    // Read data until end of file (fscanf returns 4 when successful)
     while (fscanf(file, "%s %s %d %f", 
                   students[*count].regNo, 
                   students[*count].name, 
@@ -163,6 +176,6 @@ void loadFromFile(struct Student students[], int *count) {
         (*count)++;
     }
     
-    fclose(file);
+    fclose(file);  // Close the file
     printf("Data loaded successfully! Total students: %d\n", *count);
 }
