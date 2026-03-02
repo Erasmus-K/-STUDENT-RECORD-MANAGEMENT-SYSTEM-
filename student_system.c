@@ -1,5 +1,11 @@
-#include <stdio.h>
-#include <string.h>
+/*
+ * Student Record Management System
+ * A console-based application for managing student records
+ * Demonstrates: structures, arrays, functions, file I/O, control structures
+ */
+
+#include <stdio.h>   // Standard input/output functions
+#include <string.h>  // String manipulation functions
 
 // Structure definition - groups related data together
 struct Student {
